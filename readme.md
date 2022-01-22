@@ -1,7 +1,7 @@
 
 # Basic Relational Algebra Structure in JavaScript
 
-## Not
+### Not
 
 ```js
 {
@@ -11,7 +11,7 @@
 }
 ```
 
-## Attribute Comparison
+### Attribute Comparison
 
 ```js
 {
@@ -28,9 +28,9 @@
 - LTE
 - EQ
 
-## Logical Combination
+### Logical Combination
 
-### And Combination
+#### And Combination
 
 ```js
 {
@@ -39,7 +39,7 @@
 }
 ```
 
-### Or Combination
+#### Or Combination
 
 ```js
 {
@@ -48,7 +48,7 @@
 }
 ```
 
-## Selection
+### Selection
 
 ```js
 {
@@ -58,7 +58,7 @@
 }
 ```
 
-## Projection
+### Projection
 
 ```js
 {
@@ -67,11 +67,33 @@
 }
 ```
 
-## Renaming
+### Renaming
 
-rBeersInfo(beer,maker)	Beers(name,	manuf)
+```js
+{
+  type: 'renaming',
+  mapping: [...relationRenamingMapping]
+}
+```
 
-## Natural Join
+```js
+{
+  type: 'relation-renaming-mapping',
+  base: string,
+  head: string,
+  attribute: [...attributeRenamingMapping]
+}
+```
+
+```js
+{
+  type: 'attribute-renaming-mapping',
+  base: string,
+  head: string,
+}
+```
+
+### Natural Join
 
 ```js
 {
@@ -81,7 +103,7 @@ rBeersInfo(beer,maker)	Beers(name,	manuf)
 }
 ```
 
-## Theta Join
+### Theta Join
 
 ```js
 {
@@ -92,7 +114,7 @@ rBeersInfo(beer,maker)	Beers(name,	manuf)
 }
 ```
 
-## Semi Join
+### Semi Join
 
 1. Compute natural join of R and S.
 2. Output the projection of that on just the attributes of R.
@@ -106,19 +128,19 @@ rBeersInfo(beer,maker)	Beers(name,	manuf)
 }
 ```
 
-## Outer Join
+### Outer Join
 
-## Union
+### Union
 
-## Set Difference
+### Set Difference
 
-## Cross Product
+### Cross Product
 
-## Intersection
+### Intersection
 
-## Division
+### Division
 
-## Notes
+### Notes
 
 Two relational algebra expressions are said to be
 equivalent if on every legal database instance the

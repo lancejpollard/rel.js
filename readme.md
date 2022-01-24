@@ -13,6 +13,9 @@ In principle, you would from the browser create a DSL query, and send that to th
 
 Taking into account SQL and GraphQL (and other graph query languages like Gremlin), this section should ultimately land upon a robust query DSL using JSON-like syntax. It should literally be easiest to write in JavaScript, using JSON objects so it serializes nicely, not some alternative made-up syntax which we would then have to parse.
 
+- SQL is _declarative_ (what)
+- Relational algebra is _procedual_ (how)
+
 ## Relational Algebra Data Structure
 
 This is still being figured out, but here is a rough approximation currently.
@@ -166,7 +169,7 @@ Some notes on [Relational Algebra math notation](https://github.com/lancejpollar
 
 ### Scan Operator
 
-### Notes
+## Notes
 
 Two relational algebra expressions are said to be
 equivalent if on every legal database instance the
@@ -174,3 +177,63 @@ two expressions generate the same set of tuples.
 
 - for CNF, convert to negation normal form with De Morgan laws then distribute OR over AND
 - for DNF, convert to negation normal form with De Morgan laws then distribute AND over OR
+
+Thanks to [this nice presentation](http://itu.dk/~mogel/SIDD2012/lectures/SIDD.2012.05.pdf) from _Rasmus Ejlers Møgelberg_, we have a mapping from SQL statements to relational algebra.
+
+### Select
+
+```
+select name, salary from instructor
+```
+```
+Π{name, salary}(instructor)
+```
+
+```
+select * from instructor where salary > 90000;
+```
+```
+σ{salary>90000}(instructor)
+```
+
+```
+select name, dept_name from instructor
+where salary > 90000;
+```
+
+```
+Π{name, dept_name}(σ{salary>90000}(instructor))
+```
+
+Relational algebra expression says:
+
+- First do selection
+- Then do projection
+
+(i.e., start from leaves and work your way back to the base).
+
+```
+-- cartesian product
+select * from instructor, department;
+```
+
+```
+instructor × department
+```
+
+```
+select * from student join advisor on s_ID = ID;
+```
+
+```
+student ⋈{(ID=s ID)} advisor
+```
+
+```
+select avg(salary), dept_name from instructor
+group by dept_name;
+```
+
+```
+{dept_name}G{average}(salary)
+```

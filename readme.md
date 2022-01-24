@@ -88,6 +88,8 @@ Some notes on [Relational Algebra math notation](https://github.com/lancejpollar
 }
 ```
 
+_Note: Extended (Generalized) Projection allows for functions like count and min/max involving arithmetic expressions to be projected. So basically, you can do functions here too._
+
 ### Renaming
 
 ```js
@@ -178,6 +180,21 @@ two expressions generate the same set of tuples.
 - for CNF, convert to negation normal form with De Morgan laws then distribute OR over AND
 - for DNF, convert to negation normal form with De Morgan laws then distribute AND over OR
 
+You only need select, project, and rename. The joins can be defined in terms of those.
+
+Aggregation function takes a collection of values and
+returns a single value as a result.
+
+- avg: average value
+- min: minimum value
+- max: maximum value
+- sum: sum of values
+- count: number of values
+
+Pure relational algebra removes all duplicates, e.g. after projection.
+_Multiset_ relational algebra retains duplicates, to match SQL
+semantics.
+
 Thanks to [this nice presentation](http://itu.dk/~mogel/SIDD2012/lectures/SIDD.2012.05.pdf) from _Rasmus Ejlers Møgelberg_, we have a mapping from SQL statements to relational algebra.
 
 ### Select
@@ -236,4 +253,9 @@ group by dept_name;
 
 ```
 {dept_name}G{average}(salary)
+```
+
+r ⋈ s is defined as:
+```
+∏{r.A, r.B, r.C, r.D, s.E}(σ{r.B = s.B ∧ r.D = s.D}(r x s))
 ```

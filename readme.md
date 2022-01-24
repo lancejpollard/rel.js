@@ -17,6 +17,8 @@ Taking into account SQL and GraphQL (and other graph query languages like Gremli
 
 This is still being figured out, but here is a rough approximation currently.
 
+Some notes on [Relational Algebra math notation](https://github.com/lancejpollard/math-notation/blob/make/book.ipynb).
+
 ### Not
 
 ```js

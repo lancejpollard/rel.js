@@ -9,6 +9,17 @@ The second piece is important, because it should be easy to read and write, and 
 
 In principle, you would from the browser create a DSL query, and send that to the backend. Then the backend would convert that query to a basic relational algebra tree. It would then somehow know about the state of all your shards and their properties, so it could optimize the relational algebra tree. Then it would evaluate the relational algebra tree basically, going step by step, requesting from various shards what it needs, and then sending results back to the app. So the browser would only care about the DSL, but the backend would also care about the relational algebra. The frontend could potentially also use the relational algebra if it wanted to perform an in-memory query like a real database would, as well.
 
+Another thing I'd like to potentially do here is have the cost evaluator for the query. So it would take JSON describing the state of your database system (RAM each machine has, table sizes, average record sizes, IO times, etc.) and it would use this information to figure out the optimal query plan.
+
+So basically:
+
+1. query JSON structure to use in apps.
+2. relational algebra tree to use for making queries.
+3. transformer from query to relational algebra tree.
+4. cost estimator, given JSON description of system.
+
+It won't actually perform the queries, that will be saved for somewhere else.
+
 ## DSL
 
 Taking into account SQL and GraphQL (and other graph query languages like Gremlin), this section should ultimately land upon a robust query DSL using JSON-like syntax. It should literally be easiest to write in JavaScript, using JSON objects so it serializes nicely, not some alternative made-up syntax which we would then have to parse.

@@ -17,6 +17,7 @@ So basically:
 2. relational algebra tree to use for making queries.
 3. transformer from query to relational algebra tree.
 4. cost estimator, given JSON description of system.
+5. query optimizer / simplifier, so it can make roughly optimal queries.
 
 It won't actually perform the queries, that will be saved for somewhere else.
 

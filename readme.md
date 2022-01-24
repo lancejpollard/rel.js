@@ -259,3 +259,129 @@ r ⋈ s is defined as:
 ```
 ∏{r.A, r.B, r.C, r.D, s.E}(σ{r.B = s.B ∧ r.D = s.D}(r x s))
 ```
+
+## SQL to Relational Algebra Examples
+
+Perhaps could try [this tool](https://dbis-uibk.github.io/relax/landing) as well.
+
+### Full Outer Join
+
+```sql
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName
+```
+
+![https://i.imgur.com/4nW2Y9e.png](https://i.imgur.com/4nW2Y9e.png)
+
+[![https://imgur.com/BHvfThE.png](https://imgur.com/BHvfThE.png)](https://www.sqlshack.com/sql-outer-join-overview-and-examples/)
+
+### Left Outer Join
+
+```sql
+SELECT *
+FROM Employee
+LEFT OUTER JOIN Departments ON Employee.EmpID = Departments.EmpID
+```
+
+```
+employee ⋈{oL}{employee.empid = departments.empid}(departments)
+```
+
+![https://imgur.com/wkxXVJu.png](https://imgur.com/wkxXVJu.png)
+
+[![https://imgur.com/Zr05Y2H.png](https://imgur.com/Zr05Y2H.png)](https://www.sqlshack.com/sql-outer-join-overview-and-examples/)
+
+### Right Outer Join
+
+```sql
+SELECT *
+FROM Departments
+RIGHT OUTER JOIN Employee ON Departments.EmpID = Employee.EmpID
+```
+
+```
+departments ⋈{oR}{departments.empid = employee.empid}(employee)
+```
+
+![https://imgur.com/KOPcVtj.png](https://imgur.com/KOPcVtj.png)
+
+[![https://imgur.com/HGeRbus.png](https://imgur.com/HGeRbus.png)](https://www.sqlshack.com/sql-outer-join-overview-and-examples/)
+
+### Inner Join
+
+```sql
+SELECT b.id, b.title, a.first_name, a.last_name
+FROM books b
+INNER JOIN authors a
+ON b.author_id = a.id
+ORDER BY b.id
+```
+
+```
+τ b.id
+ π b.id, b.title, a.first_name, a.last_name
+  (ρ b books ⋈ b.author_id = a.id
+   ρ a authors)
+```
+
+[![https://imgur.com/xrKeK6x.png](https://imgur.com/xrKeK6x.png)](https://learnsql.com/blog/sql-join-examples-with-explanations/)
+
+### Join
+
+```sql
+SELECT b.id, b.title, b.type, t.last_name AS translator
+FROM books b
+JOIN translators t
+ON b.translator_id = t.id
+ORDER BY b.id
+```
+
+```
+τ b.id
+ π b.id, b.title, b.type, t.last_name → translator
+  (ρ b books ⋈ b.translator_id = t.id
+   ρ t translators)
+```
+
+![https://imgur.com/bwfKEF8.png](https://imgur.com/bwfKEF8.png)
+
+### Left Join
+
+```sql
+SELECT b.id, b.title, b.type, a.last_name AS author, t.last_name AS translator
+FROM books b
+LEFT JOIN authors a
+ON b.author_id = a.id
+LEFT JOIN translators t
+ON b.translator_id = t.id
+ORDER BY b.id
+```
+
+Don't have an image for that one.
+
+
+### Right Join
+
+```sql
+SELECT b.id, b.title, e.last_name AS editor
+FROM books b
+RIGHT JOIN editors e
+ON b.editor_id = e.id
+ORDER BY b.id
+```
+
+### Full Join
+
+```sql
+SELECT b.id, b.title, a.last_name AS author, e.last_name AS editor, t.last_name AS translator
+FROM books b
+FULL JOIN authors a
+ON b.author_id = a.id
+FULL JOIN editors e
+ON b.editor_id = e.id
+FULL JOIN translators t
+ON b.translator_id = t.id
+ORDER BY b.id
+```
